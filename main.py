@@ -21,7 +21,7 @@ while running :
     window.blit(game.background,(game.background_x,0))
     
     #appliquer l'image du joueur
-    window.blit(game.player.image, game.player.rect)
+    window.blit(game.player.image_right, game.player.rect)
 
     game.game_clock.tick(game.fps)
     
@@ -54,10 +54,6 @@ while running :
     if game.ground_collision and game.player.isJumping :
         game.player.jumping()
 
-    #Obstacles
-    if game.nb_obstacles < 2 :
-        if random.randint(0,5)==1 :
-            game.spawn_foin()
     
     game.liste_obstacles.draw(window)
   
