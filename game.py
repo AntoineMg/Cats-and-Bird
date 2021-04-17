@@ -1,6 +1,8 @@
 import pygame
-from player import Player
-from ground import Ground 
+import os
+from player import Player 
+from ground import Ground
+from foin import Foin
 
 
 #creation classe game
@@ -12,14 +14,21 @@ class Game:
         self.all_players = pygame.sprite.Group
         self.all_players.add(self.player)
         self.ground = Ground(self)
-        self.background = pygame.image.load("assets/background.png")
-        self.background_x = 0
         self.pressed = {}
+        self.ground_collision = False
         self.game_clock = pygame.time.Clock()
         self.fps = 30
         self.rect = pygame.Rect(0, 0, 720, 480)
         self.nb_obstacles = 0
         self.liste_obstacles = pygame.sprite.Group()
+        self.spawn_foin()
+
+        
+
+    def spawn_foin(self):
+        foin = Foin()
+        self.liste_obstacles.add(foin)
+        self.nb_obstacles += 1
     
     def gravity_game(self, vector1, vector2):
         self.player.rect.y += vector1[1]+vector2[1]

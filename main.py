@@ -9,6 +9,9 @@ pygame.init()
 pygame.display.set_caption("Cats & Mouses")
 window = pygame.display.set_mode((720,480))
 
+#charger arriere plan
+background=pygame.image.load('assets/background.png')
+
 #charger jeu
 game = Game()
 
@@ -18,27 +21,24 @@ running=True
 while running :
     
     #appliquer l'arriere plan
-    window.blit(game.background,(game.background_x,0))
+    window.blit(background,(0,0))
     
     #appliquer l'image du joueur
-    window.blit(game.player.image_right, game.player.rect)
+    window.blit(game.player.image, game.player.rect)
+
+    #afficher le sol
+    game.ground.displayGround(window)
 
     game.game_clock.tick(game.fps)
     
     #verifier touche
     if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < 720 :
-        game.player.image=game.player.image_right
-        if game.player.rect.x < 400 and not game.check_collision(game.player, game.liste_obstacles):
-            game.player.move_right() 
-        elif game.player.rect.x >= 400 :
-            game.decor_recul_right()  
+        if not game.check_collision(game.player, game.liste_obstacles):
+            game.player.move_right()   
 
     elif game.pressed.get(pygame.K_LEFT) and game.player.rect.x > 0 :
-        game.player.image=game.player.image_left
-        if game.player.rect.x > 50 and not game.check_collision(game.player, game.liste_obstacles):
+        if not game.check_collision(game.player, game.liste_obstacles):
             game.player.move_left()
-        elif game.player.rect.x <= 50 :
-            game.decor_recul_left()
         
     if game.pressed.get(pygame.K_UP) :
         game.player.isJumping = True
@@ -54,8 +54,14 @@ while running :
     if game.ground_collision and game.player.isJumping :
         game.player.jumping()
 
+    #Obstacles
+    if game.nb_obstacles < 2 :
+        if random.randint(0,5)==1 :
+            game.spawn_foin()
     
     game.liste_obstacles.draw(window)
+    
+
   
 
     #appliquer gravité
