@@ -21,25 +21,28 @@ running=True
 while running :
     
     #appliquer l'arriere plan
-    window.blit(background,(0,0))
+    window.blit(background,(game.bg_x,0))
     
     #appliquer l'image du joueur
     window.blit(game.player.image, game.player.rect)
-
-    #afficher le sol
-    game.ground.displayGround(window)
 
     game.game_clock.tick(game.fps)
     
     #verifier touche
     if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < 720 :
-        if not game.check_collision(game.player, game.liste_obstacles):
-            game.player.move_right()   
+        if game.player.rect.x >= 500 :
+            game.move_decor_left()
+        elif not game.check_collision(game.player, game.liste_obstacles):
+            game.player.move_right()
+        
 
     elif game.pressed.get(pygame.K_LEFT) and game.player.rect.x > 0 :
-        if not game.check_collision(game.player, game.liste_obstacles):
+        if game.player.rect.x <= 50 :
+            game.move_decor_right()
+        elif not game.check_collision(game.player, game.liste_obstacles):
             game.player.move_left()
         
+
     if game.pressed.get(pygame.K_UP) :
         game.player.isJumping = True
         game.player.jumpCount += 1

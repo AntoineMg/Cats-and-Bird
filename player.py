@@ -1,32 +1,22 @@
 import pygame, time
 from pygame import time
 
-"""
-ij1=pygame.image.load("assets/ij1.png")
-ij2=pygame.image.load("assets/ij2.png")
-ij3=pygame.image.load("assets/ij3.png")
-ij4=pygame.image.load("assets/ij4.png")
-ij5=pygame.image.load("assets/ij5.png")
-ij6=pygame.image.load("assets/ij6.png")
-ij7=pygame.image.load("assets/ij7.png")
-ij8=pygame.image.load("assets/ij8.png")
-ij9=pygame.image.load("assets/ij9.png")
-"""
-
-
 #creation classe joueur
 class Player(pygame.sprite.Sprite):
     
     def __init__(self, game):
         super().__init__()
-        self.game=game
-        self.frame=0
-        self.xspeed=10
-        imagejoueur=pygame.image.load('assets/player.png')
-        self.image=pygame.transform.scale(imagejoueur,(100,60))
-        self.rect = self.image.get_rect()
+        self.game = game
+        self.frame = 0
+        self.xspeed = 10
+        imagejoueurright = pygame.image.load('assets/player_right.png')
+        imagejoueurleft = pygame.image.load('assets/player_left.png')
+        self.image_right = pygame.transform.scale(imagejoueurright,(100,60))
+        self.image_left = pygame.transform.scale(imagejoueurleft,(100,60))
+        self.image = self.image_right
+        self.rect = self.image_right.get_rect()
         self.rect.x = 260
-        self.rect.y = 30
+        self.rect.y = 290
         self.jump = 0
         self.jump_up = 0
         self.jump_down = 5
@@ -34,16 +24,17 @@ class Player(pygame.sprite.Sprite):
         self.isJumping = False
         self.gravity = (0,10)
         self.resistance = (0,0)
-
         
-    def move_right(self):
+    def move_right(self) :
         self.rect.x += self.xspeed
+        self.image = self.image_right
         
     def move_left(self):
         self.rect.x -= self.xspeed
+        self.image = self.image_left
         
     def jumping(self):
-        if self.isJumping is True : 
+        if self.isJumping == True : 
             if self.jump_up >= 10:
                 self.jump_down -= 1
                 self.jump = self.jump_down

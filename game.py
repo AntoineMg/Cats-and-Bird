@@ -22,8 +22,17 @@ class Game:
         self.nb_obstacles = 0
         self.liste_obstacles = pygame.sprite.Group()
         self.spawn_foin()
+        self.bg_x = 0
 
-        
+    def move_decor_left(self):
+        self.bg_x -= self.player.xspeed
+        for element in self.liste_obstacles :
+            element.rect.x -= self.player.xspeed
+    
+    def move_decor_right(self):
+        self.bg_x += self.player.xspeed
+        for element in self.liste_obstacles :
+            element.rect.x += self.player.xspeed
 
     def spawn_foin(self):
         foin = Foin()
