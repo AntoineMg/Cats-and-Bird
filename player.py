@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.image = self.image_right
         self.rect = self.image_right.get_rect()
         self.rect.x = 260
-        self.rect.y = 290
+        self.rect.y = 200
         self.jump = 0
         self.jump_up = 0
         self.jump_down = 5

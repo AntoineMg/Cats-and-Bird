@@ -44,3 +44,22 @@ class Game:
 
     def check_collision(self,sprite,group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
+    
+    def check_collision_down(self, player, objet):
+        if player.rect.bottom > objet.rect.top :
+            if player.rect.right > objet.rect.left or player.rect.left > objet.rect.right :
+                return True
+        else :
+            return False
+    
+    def check_collision_left(self, player, objet):
+        if player.rect.right > objet.rect.left and player.rect.left < objet.rect.right and player.rect.bottom > objet.rect.top :
+            return True
+        else :
+            return False
+    
+    def check_collision_right(self, player, objet):
+        if player.rect.left < objet.rect.right and player.rect.right > objet.rect.left and player.rect.bottom > objet.rect.top :
+            return True
+        else :
+            return False

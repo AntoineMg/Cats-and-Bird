@@ -17,6 +17,8 @@ game = Game()
 
 running=True
 
+collision_left = False
+
 #boucle principale
 while running :
     
@@ -32,28 +34,50 @@ while running :
     if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < 720 :
         if game.player.rect.x >= 500 :
             game.move_decor_left()
-        elif not game.check_collision(game.player, game.liste_obstacles):
-            game.player.move_right()
+        else :
+            for obstacle in game.liste_obstacles :
+                if game.check_collision_left(game.player,obstacle):
+                    collision_left = True
+                else :
+                    collision_left = False
+            if collision_left == False :
+                game.player.move_right()
         
 
-    elif game.pressed.get(pygame.K_LEFT) and game.player.rect.x > 0 :
+    elif game.pressed.get(pygame.K_LEFT) :
         if game.player.rect.x <= 50 :
             game.move_decor_right()
-        elif not game.check_collision(game.player, game.liste_obstacles):
-            game.player.move_left()
+        else :
+            for obstacle in game.liste_obstacles :
+                if game.check_collision_right(game.player,obstacle):
+                    collision_right = True
+                else :
+                    collision_right = False
+                    game.player.move_left()
+            if collision_right == False :
+                game.player.move_left()
         
 
     if game.pressed.get(pygame.K_UP) :
         game.player.isJumping = True
         game.player.jumpCount += 1
-    
-    if game.ground.rect.colliderect(game.player.rect):
+
+    for obstacle in game.liste_obstacles :
+        if game.check_collision_down(game.player,obstacle):
+            game.player.resistance = (0, -10)
+            game.ground_collision = True
+            game.player.jumpCount = 0
+        else :
+            game.player.resistance = (0, 0)
+
+    if game.check_collision_down(game.player,game.ground):
         game.player.resistance = (0, -10)
         game.ground_collision = True
         game.player.jumpCount = 0
     else :
         game.player.resistance = (0, 0)
     
+
     if game.ground_collision and game.player.isJumping :
         game.player.jumping()
 
@@ -63,9 +87,6 @@ while running :
             game.spawn_foin()
     
     game.liste_obstacles.draw(window)
-    
-
-  
 
     #appliquer gravité
     game.gravity_game(game.player.gravity, game.player.resistance)
