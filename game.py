@@ -47,14 +47,19 @@ class Game:
     
     def check_collision_down(self, player, objet):
         if player.rect.bottom > objet.rect.top :
-            if player.rect.right > objet.rect.left or player.rect.left > objet.rect.right :
+            if player.rect.right > objet.rect.left or player.rect.left < objet.rect.right :
                 return True
+            else :
+                return False
         else :
             return False
     
     def check_collision_left(self, player, objet):
         if player.rect.right > objet.rect.left and player.rect.left < objet.rect.right and player.rect.bottom > objet.rect.top :
-            return True
+            if player.rect.bottom-5 > objet.rect.top :
+                return False
+            else :
+                return True
         else :
             return False
     

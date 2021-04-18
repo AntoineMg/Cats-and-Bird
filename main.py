@@ -36,7 +36,7 @@ while running :
             game.move_decor_left()
         else :
             for obstacle in game.liste_obstacles :
-                if game.check_collision_left(game.player,obstacle):
+                if game.check_collision_left(game.player,obstacle) :
                     collision_left = True
                 else :
                     collision_left = False
@@ -53,10 +53,8 @@ while running :
                     collision_right = True
                 else :
                     collision_right = False
-                    game.player.move_left()
             if collision_right == False :
-                game.player.move_left()
-        
+                game.player.move_left()     
 
     if game.pressed.get(pygame.K_UP) :
         game.player.isJumping = True
@@ -64,20 +62,17 @@ while running :
 
     for obstacle in game.liste_obstacles :
         if game.check_collision_down(game.player,obstacle):
-            game.player.resistance = (0, -10)
-            game.ground_collision = True
-            game.player.jumpCount = 0
+            game.obstacle_collision_down = True
         else :
-            game.player.resistance = (0, 0)
+            game.obstacle_collision_down = False
 
-    if game.check_collision_down(game.player,game.ground):
+    if game.check_collision_down(game.player,game.ground) or game.obstacle_collision_down :
         game.player.resistance = (0, -10)
         game.ground_collision = True
         game.player.jumpCount = 0
     else :
         game.player.resistance = (0, 0)
     
-
     if game.ground_collision and game.player.isJumping :
         game.player.jumping()
 
