@@ -47,7 +47,7 @@ class Game:
     
     def check_collision_down(self, player, objet):
         if player.rect.bottom > objet.rect.top :
-            if player.rect.right > objet.rect.left or player.rect.left < objet.rect.right :
+            if player.rect.right-20 > objet.rect.left and player.rect.left+20 < objet.rect.right :
                 return True
             else :
                 return False
@@ -56,7 +56,7 @@ class Game:
     
     def check_collision_left(self, player, objet):
         if player.rect.right > objet.rect.left and player.rect.left < objet.rect.right and player.rect.bottom > objet.rect.top :
-            if player.rect.bottom-5 > objet.rect.top :
+            if player.rect.bottom+50 > objet.rect.top :
                 return False
             else :
                 return True
@@ -64,7 +64,11 @@ class Game:
             return False
     
     def check_collision_right(self, player, objet):
+        print(player.rect.bottom,objet.rect.top)
         if player.rect.left < objet.rect.right and player.rect.right > objet.rect.left and player.rect.bottom > objet.rect.top :
             return True
+
         else :
             return False
+        
+        

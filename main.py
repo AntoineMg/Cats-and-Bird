@@ -53,7 +53,7 @@ while running :
                     collision_right = True
                 else :
                     collision_right = False
-            if collision_right == False :
+            if not collision_right :
                 game.player.move_left()     
 
     if game.pressed.get(pygame.K_UP) :
