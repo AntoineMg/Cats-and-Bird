@@ -53,21 +53,28 @@ class Game:
                 return False
         else :
             return False
-    
+    #Test des collisions gauche droite, ajout de marges pour eviter pb de blocage
+
     def check_collision_left(self, player, objet):
-        if player.rect.right > objet.rect.left and player.rect.left < objet.rect.right and player.rect.bottom > objet.rect.top :
-            if player.rect.bottom+50 > objet.rect.top :
-                return False
-            else :
+        #debug : 
+        #print("pb=",player.rect.bottom,"     ot=", objet.rect.top,"      pr=",player.rect.right,"      ol=",objet.rect.left)
+        if player.rect.bottom-15 > objet.rect.top :
+            if player.rect.right+10 > objet.rect.left and player.rect.left+30 < objet.rect.right :
                 return True
+            else :
+                return False
         else :
             return False
     
     def check_collision_right(self, player, objet):
-        print(player.rect.bottom,objet.rect.top)
-        if player.rect.left < objet.rect.right and player.rect.right > objet.rect.left and player.rect.bottom > objet.rect.top :
-            return True
-
+        #debug :
+        #print("pb=",player.rect.bottom,"     ot=", objet.rect.top,"      pr=",player.rect.right,"      pl=",player.rect.left,"       or=",objet.rect.right,"       ol=",objet.rect.left)
+        if player.rect.bottom-15 > objet.rect.top :
+            if player.rect.left-10 < objet.rect.right and player.rect.right-30 > objet.rect.left :
+                #print("collision right")
+                return True
+            else :
+                return False
         else :
             return False
         

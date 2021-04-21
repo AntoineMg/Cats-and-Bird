@@ -31,7 +31,7 @@ while running :
     game.game_clock.tick(game.fps)
     
     #verifier touche
-    if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < 720 :
+    if game.pressed.get(pygame.K_RIGHT) :
         if game.player.rect.x >= 500 :
             game.move_decor_left()
         else :
@@ -40,7 +40,7 @@ while running :
                     collision_left = True
                 else :
                     collision_left = False
-            if collision_left == False :
+            if not collision_left :
                 game.player.move_right()
         
 
