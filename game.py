@@ -20,24 +20,18 @@ class Game:
         self.fps = 30
         self.rect = pygame.Rect(0, 0, 720, 480)
         self.nb_obstacles = 0
-        self.liste_obstacles = pygame.sprite.Group()
-        self.spawn_foin()
         self.bg_x = 0
+        self.foin=Foin()
 
     def move_decor_left(self):
         self.bg_x -= self.player.xspeed
-        for element in self.liste_obstacles :
+        for element in self.foin.liste_obstacles :
             element.rect.x -= self.player.xspeed
     
     def move_decor_right(self):
         self.bg_x += self.player.xspeed
-        for element in self.liste_obstacles :
+        for element in self.foin.liste_obstacles :
             element.rect.x += self.player.xspeed
-
-    def spawn_foin(self):
-        foin = Foin()
-        self.liste_obstacles.add(foin)
-        self.nb_obstacles += 1
     
     def gravity_game(self, vector1, vector2):
         self.player.rect.y += vector1[1]+vector2[1]

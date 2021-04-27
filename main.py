@@ -19,6 +19,8 @@ running=True
 
 collision_left = False
 
+niveau_affiché = False
+
 #boucle principale
 while running :
     
@@ -35,7 +37,7 @@ while running :
         if game.player.rect.x >= 500 :
             game.move_decor_left()
         else :
-            for obstacle in game.liste_obstacles :
+            for obstacle in game.foin.liste_obstacles :
                 if game.check_collision_left(game.player,obstacle) :
                     collision_left = True
                 else :
@@ -48,7 +50,7 @@ while running :
         if game.player.rect.x <= 50 :
             game.move_decor_right()
         else :
-            for obstacle in game.liste_obstacles :
+            for obstacle in game.foin.liste_obstacles :
                 if game.check_collision_right(game.player,obstacle):
                     collision_right = True
                 else :
@@ -60,13 +62,13 @@ while running :
         game.player.isJumping = True
         game.player.jumpCount += 1
 
-    for obstacle in game.liste_obstacles :
+    for obstacle in game.foin.liste_obstacles :
         if game.check_collision_down(game.player,obstacle):
             game.obstacle_collision_down = True
         else :
             game.obstacle_collision_down = False
 
-    if game.check_collision_down(game.player,game.ground) or game.obstacle_collision_down :
+    if game.check_collision_down(game.player,game.ground) or game.check_collision_down :
         game.player.resistance = (0, -10)
         game.ground_collision = True
         game.player.jumpCount = 0
@@ -75,14 +77,13 @@ while running :
     
     if game.ground_collision and game.player.isJumping :
         game.player.jumping()
-
-    #Obstacles
-    if game.nb_obstacles < 2 :
-        if random.randint(0,5)==1 :
-            game.spawn_foin()
     
-    game.liste_obstacles.draw(window)
+    if niveau_affiché == False :
+        game.foin.spawn_level1()
+        niveau_affiché = True
 
+    game.foin.liste_obstacles.draw(window)
+        
     #appliquer gravité
     game.gravity_game(game.player.gravity, game.player.resistance)
 
