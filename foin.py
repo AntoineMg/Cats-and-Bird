@@ -11,6 +11,7 @@ class Foin(pygame.sprite.Sprite) :
         self.liste_obstacles = pygame.sprite.Group()
     
     def spawn_level1(self):
+        
         self.imgraw = pygame.image.load("assets/foin/foin.png")
         self.image = pygame.transform.scale(self.imgraw,(100,60))
         
