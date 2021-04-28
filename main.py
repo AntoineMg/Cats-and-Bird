@@ -8,20 +8,23 @@ pygame.init()
 pygame.display.set_caption("Cats & Mouses")
 window = pygame.display.set_mode((720,480))
 
-#images menu
+#importer images
 imgmenu = pygame.image.load('assets/imgmenu.png')
 bouton_niveau1 = pygame.image.load('assets/bouton_level1.png')
 bouton_niveau2 = pygame.image.load('assets/bouton_level2.png')
 bouton_niveau3 = pygame.image.load('assets/bouton_level3.png')
-
-#charger arriere plan
+imgwin = pygame.image.load('assets/imgwin.png')
+imglose = pygame.image.load('assets/imglose.png')
 background=pygame.image.load('assets/background.png')
 
 #charger jeu
 game = Game()
 
-playing=False
+playing = False
 menu_affiche = True
+ecran_fin = False
+
+temps_partie=0
 
 while True :
     if menu_affiche == True :
@@ -41,6 +44,7 @@ while True :
         window.blit(game.player.image, game.player.rect)
 
         game.game_clock.tick(game.fps)
+        temps_partie+=1
         
         #verifier touche
         if game.pressed.get(pygame.K_RIGHT) :
@@ -88,7 +92,17 @@ while True :
         if game.ground_collision and game.player.isJumping :
             game.player.jumping()
         
-
+        if game.bg_x <= -1500 :
+            #fin de partie
+            print("fin de la game")
+            playing=False
+            if temps_partie < 1000 :
+                gagne = True
+            else :
+                gagne = False
+            ecran_fin=True
+        
+        print(temps_partie)
 
         game.foin.liste_obstacles.draw(window)
             
@@ -99,6 +113,17 @@ while True :
         #maj de l'écran
         pygame.display.flip()
         
+        
+
+    if ecran_fin==True :
+        if gagne == True :
+            window.blit(imgwin,(0,0))
+        else :
+            window.blit(imglose,(0,0))
+    pygame.display.flip()
+
+
+
     #boucle evenements
     for event in pygame.event.get():
         #evenement quitter
