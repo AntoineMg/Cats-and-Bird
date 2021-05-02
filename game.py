@@ -22,14 +22,17 @@ class Game:
         self.nb_obstacles = 0
         self.bg_x = 0
         self.foin=Foin()
+        self.oiseau_x = 500
 
     def move_decor_left(self):
         self.bg_x -= self.player.xspeed
+        self.oiseau_x -= self.player.xspeed
         for element in self.foin.liste_obstacles :
             element.rect.x -= self.player.xspeed
     
     def move_decor_right(self):
         self.bg_x += self.player.xspeed
+        self.oiseau_x += self.player.xspeed
         for element in self.foin.liste_obstacles :
             element.rect.x += self.player.xspeed
     
@@ -40,6 +43,7 @@ class Game:
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
     
     def check_collision_down(self, player, objet):
+        print("pb=",player.rect.bottom,"     ot=", objet.rect.top,"      pr=",player.rect.right,"      ol=",objet.rect.left)
         if player.rect.bottom > objet.rect.top :
             if player.rect.right-20 > objet.rect.left and player.rect.left+20 < objet.rect.right :
                 return True

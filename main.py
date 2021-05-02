@@ -16,10 +16,16 @@ bouton_niveau3 = pygame.image.load('assets/bouton_level3.png')
 imgwin = pygame.image.load('assets/imgwin.png')
 imglose = pygame.image.load('assets/imglose.png')
 background=pygame.image.load('assets/background.png')
+imgbird1=pygame.image.load('assets/imgbird1.png')
+imgbird1 = pygame.transform.smoothscale(imgbird1, (60, 50))
+imgbird2=pygame.image.load('assets/imgbird2.png')
+imgbird2 = pygame.transform.smoothscale(imgbird2, (50, 50))
 
 #charger jeu
 game = Game()
 
+bird_finish = False
+bird=1
 playing = False
 menu_affiche = True
 ecran_fin = False
@@ -37,25 +43,39 @@ while True :
     #boucle jeu
     if playing==True :
         
-        #appliquer l'arriere plan
+        #afficher l'arriere plan
         window.blit(background,(game.bg_x,0))
         
-        #appliquer l'image du joueur
+        #afficher l'image du joueur
         window.blit(game.player.image, game.player.rect)
 
         game.game_clock.tick(game.fps)
         temps_partie+=1
-        
+
+        #afficher image oiseau
+        game.oiseau_x+=7
+
+        if temps_partie%30 == 0 :
+            bird=1
+        elif temps_partie%15 == 0 :
+            bird=2
+
+        if not bird_finish :
+            if bird==1 :
+                window.blit(imgbird1,(game.oiseau_x,80))
+            elif bird==2 :
+                window.blit(imgbird2,(game.oiseau_x,80))
+            
         #verifier touche
         if game.pressed.get(pygame.K_RIGHT) :
             if game.player.rect.x >= 500 :
                 game.move_decor_left()
             else :
+                collision_left = False
                 for obstacle in game.foin.liste_obstacles :
                     if game.check_collision_left(game.player,obstacle) :
                         collision_left = True
-                    else :
-                        collision_left = False
+                        
                 if not collision_left :
                     game.player.move_right()
             
@@ -64,11 +84,11 @@ while True :
             if game.player.rect.x <= 50 :
                 game.move_decor_right()
             else :
+                collision_right = False
                 for obstacle in game.foin.liste_obstacles :
                     if game.check_collision_right(game.player,obstacle):
                         collision_right = True
-                    else :
-                        collision_right = False
+                        
                 if not collision_right :
                     game.player.move_left()     
 
@@ -76,13 +96,12 @@ while True :
             game.player.isJumping = True
             game.player.jumpCount += 1
 
+        game.obstacle_collision_down = False
         for obstacle in game.foin.liste_obstacles :
             if game.check_collision_down(game.player,obstacle):
                 game.obstacle_collision_down = True
-            else :
-                game.obstacle_collision_down = False
 
-        if game.check_collision_down(game.player,game.ground) or game.check_collision_down :
+        if game.check_collision_down(game.player,game.ground) or game.obstacle_collision_down :
             game.player.resistance = (0, -10)
             game.ground_collision = True
             game.player.jumpCount = 0
@@ -92,17 +111,18 @@ while True :
         if game.ground_collision and game.player.isJumping :
             game.player.jumping()
         
-        if game.bg_x <= -1500 :
+        if game.bg_x <= -3000 :
             #fin de partie
             print("fin de la game")
             playing=False
-            if temps_partie < 1000 :
+            bird_finish=True
+            if temps_partie < 428 :
                 gagne = True
             else :
                 gagne = False
             ecran_fin=True
         
-        print(temps_partie)
+        #print(temps_partie)
 
         game.foin.liste_obstacles.draw(window)
             

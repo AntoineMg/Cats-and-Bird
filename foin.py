@@ -20,19 +20,19 @@ class Foin(pygame.sprite.Sprite) :
         foin1.image = self.image
         foin1.rect = self.image.get_rect()
         foin1.rect.x = 150
-        foin1.rect.y = 280
+        foin1.rect.y = 250
         self.liste_obstacles.add(foin1)
 
         foin2 = pygame.sprite.Sprite()
         foin2.image = self.image
         foin2.rect = self.image.get_rect()
         foin2.rect.x = 1400
-        foin2.rect.y = 280
+        foin2.rect.y = 250
         self.liste_obstacles.add(foin2)
 
         foin3 = pygame.sprite.Sprite()
         foin3.image = self.image
         foin3.rect = self.image.get_rect()
         foin3.rect.x = 500
-        foin3.rect.y = 280
+        foin3.rect.y = 250
         self.liste_obstacles.add(foin3)
