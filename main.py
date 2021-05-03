@@ -24,12 +24,33 @@ imgbird2 = pygame.transform.smoothscale(imgbird2, (50, 50))
 #charger jeu
 game = Game()
 
+
+
+
+def reset_var():
+    bird_finish = False
+    bird=1
+    playing = False
+    menu_affiche = True
+    ecran_fin = False
+    gagne = False
+    temps_partie=0
+    game.__init__()
+    game.player.__init__(game)
+    game.ground_collision = False
+    game.rect = pygame.Rect(0, 0, 720, 480)
+    game.nb_obstacles = 0
+    game.bg_x = 0
+    game.oiseau_x = 500
+    playing=False
+    
+
+
 bird_finish = False
 bird=1
 playing = False
 menu_affiche = True
 ecran_fin = False
-
 temps_partie=0
 
 while True :
@@ -176,4 +197,9 @@ while True :
                         menu_affiche = False
                         playing=True
                         game.foin.spawn_level3()
+
+            if ecran_fin == True :
+                menu_affiche = True
+                ecran_fin = False
+                reset_var()
                     
