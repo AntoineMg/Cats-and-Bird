@@ -1,6 +1,5 @@
-import pygame
+import pygame, random, os, sys
 from game import Game
-import random, os
 
 pygame.init()
 
@@ -23,28 +22,6 @@ imgbird2 = pygame.transform.smoothscale(imgbird2, (50, 50))
 
 #charger jeu
 game = Game()
-
-
-
-
-def reset_var():
-    bird_finish = False
-    bird=1
-    playing = False
-    menu_affiche = True
-    ecran_fin = False
-    gagne = False
-    temps_partie=0
-    game.__init__()
-    game.player.__init__(game)
-    game.ground_collision = False
-    game.rect = pygame.Rect(0, 0, 720, 480)
-    game.nb_obstacles = 0
-    game.bg_x = 0
-    game.oiseau_x = 500
-    playing=False
-    
-
 
 bird_finish = False
 bird=1
@@ -76,9 +53,9 @@ while True :
         #afficher image oiseau
         game.oiseau_x+=7
 
-        if temps_partie%30 == 0 :
+        if temps_partie%14 == 0 :
             bird=1
-        elif temps_partie%15 == 0 :
+        elif temps_partie%7 == 0 :
             bird=2
 
         if not bird_finish :
@@ -164,7 +141,7 @@ while True :
     pygame.display.flip()
 
 
-
+    print(game.oiseau_x)
     #boucle evenements
     for event in pygame.event.get():
         #evenement quitter
@@ -199,7 +176,6 @@ while True :
                         game.foin.spawn_level3()
 
             if ecran_fin == True :
-                menu_affiche = True
-                ecran_fin = False
-                reset_var()
+                #commande trouvée sur un forum
+                os.execv(sys.executable, ['python'] + sys.argv)
                     
